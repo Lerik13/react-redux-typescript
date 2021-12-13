@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { fetchUsers } from '../store/action-creators/user';
 
-const UserList: React.FC = () => {
-	const {users, error, loading} = useTypedSelector(state => state.user)
-	const {fetchUsers} = useActions()
-
+const TodoList: React.FC = () => {
+	const {todos, page, limit, error, loading} = useTypedSelector(state => state.todo)
+	const {fetchTodos} = useActions()
+	
 	useEffect(() => {
-		fetchUsers()
+		fetchTodos(page, limit)
 	}, [])
 
 	if (loading) {
@@ -20,11 +19,11 @@ const UserList: React.FC = () => {
 
 	return (
 		<div>
-			{users.map(user => 
-				<div key={user.id}>{user.name}</div>
+			{todos. map(todo => 
+				<div key={todo.id}>{todo.id} - {todo.title}</div>
 			)}
 		</div>
 	);
 };
 
-export default UserList;
+export default TodoList;
